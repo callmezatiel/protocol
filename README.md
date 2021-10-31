@@ -38,7 +38,7 @@ And some commands in automatic way to do its job i hope you like my tool.
     sudo ./protocol.sh 
 ```
 
-## NOTE: ONLY RUN IN ROOT USER
+## NOTE: # run with a root privilege
 
 # Issues will be fixed asap. Pull Request Welcomed
 https://github.com/callmezatiel/protocol/issues
