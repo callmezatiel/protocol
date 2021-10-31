@@ -32,11 +32,10 @@ And some commands in automatic way to do its job i hope you like my tool.
 * Type the following commands :
 
 ```
-    - [X] cd Desktop
-    - [X] unzip protocol.zip
-    - [X] cd protocol
-    - [X] chmod +x protocol
-    - [X] sudo ./protocol  or  sudo bash protocol or sudo sh ./protocol
+    git clone https://github.com/callmezatiel/protocol
+    cd protocol
+    chmod +x protocol.sh
+    sudo ./protocol.sh 
 ```
 
 # ONLY RUN IN ROOT USER
