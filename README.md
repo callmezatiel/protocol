@@ -35,8 +35,8 @@ And some commands in automatic way to do its job i hope you like my tool.
     - [X] cd Desktop
     - [X] unzip protocol.zip
     - [X] cd protocol
-    - [X] chmod +x protocol.sh
-    - [X] ./protocol.sh  or  bash protocol.sh or sh ./protocol.sh
+    - [X] chmod +x protocol
+    - [X] ./protocol  or  bash protocol or sh ./protocol
 ```
 
 # Issues will be fixed asap. Pull Request Welcomed
