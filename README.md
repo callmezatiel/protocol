@@ -9,6 +9,7 @@ Dependencies
 | Dependencies| Description |
 | ------ | ------ |
 | arp-scan |  Networking Scanner / Advanced IP Scanner (Non-optional) |
+| git |  The fast distributed version control system (Non-optional) |
 
 And some commands in automatic way to do its job i hope you like my tool.
 
