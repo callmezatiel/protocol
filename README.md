@@ -36,8 +36,10 @@ And some commands in automatic way to do its job i hope you like my tool.
     - [X] unzip protocol.zip
     - [X] cd protocol
     - [X] chmod +x protocol
-    - [X] ./protocol  or  bash protocol or sh ./protocol
+    - [X] sudo ./protocol  or  sudo bash protocol or sudo sh ./protocol
 ```
+
+# ONLY RUN IN ROOT USER
 
 # Issues will be fixed asap. Pull Request Welcomed
 https://github.com/callmezatiel/protocol/issues
