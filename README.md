@@ -4,7 +4,7 @@ Dependencies
 
 * "Kali Linux Distro"
 * "Parrot Security OS"
-* "Black Arch Distro"
+* "Black Arch Distro" (TEST ONLY)
 
 | Dependencies| Description |
 | ------ | ------ |
@@ -13,6 +13,8 @@ Dependencies
 And some commands in automatic way to do its job i hope you like my tool.
 
 ## Preview
+
+![protocol.png](https://i.postimg.cc/Gt2m38Mp/protocol.png)
 
 ### Features
 
@@ -34,7 +36,7 @@ And some commands in automatic way to do its job i hope you like my tool.
     - [X] unzip protocol.zip
     - [X] cd protocol
     - [X] chmod +x protocol.sh
-    - [X] ./protocol.sh  or  bash protocol.sh
+    - [X] ./protocol.sh  or  bash protocol.sh or sh ./protocol.sh
 ```
 
 # Issues will be fixed asap. Pull Request Welcomed
