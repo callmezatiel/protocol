@@ -27,7 +27,6 @@ And some commands in automatic way to do its job i hope you like my tool.
 
 # Install
 
-* Copy protocol.zip to Desktop .
 * Open The Terminal .
 * Type the following commands :
 
