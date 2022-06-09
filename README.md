@@ -65,7 +65,7 @@ And some commands in automatic way to do its job i hope you like my tool.
 
 ### Author
 
-Zatiel ([Zati](https://github.com/callmezatiel))
+Zatiel ([callmezatiel](https://github.com/callmezatiel))
 
 # Issues will be fixed asap. Pull Request Welcomed
 https://github.com/callmezatiel/protocol/issues
