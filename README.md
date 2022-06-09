@@ -63,8 +63,9 @@ And some commands in automatic way to do its job i hope you like my tool.
 
 ### NOTE: Run with a root privilege
 
-### Author
 
+###  💙 Thanks and credits
+### Author 
 Zatiel ([callmezatiel](https://github.com/callmezatiel))
 
 # Issues will be fixed asap. Pull Request Welcomed
