@@ -10,6 +10,19 @@
 
 <h4 align="center">Personal Spoofing</h4>
 
+
+### What's Protocol?
+
+Protocol is a easy network scanner.
+
+### Some Features
+
+- [x] Multiple clients.
+
+### Call for Contributions⚠️
+
+Hey, before you go to gallery you need to know that the Protocol is a open project, so, if you finds this tool useful and wants to add some functionality, improve the code performance or improve something in the BlackMamba, the best way to get it added is to submit a pull request <3
+
 Dependencies
 
 * "Kali Linux Distro"
@@ -49,6 +62,10 @@ And some commands in automatic way to do its job i hope you like my tool.
 ```
 
 ### NOTE: Run with a root privilege
+
+### Author
+
+Zatiel ([Zati](https://github.com/callmezatiel))
 
 # Issues will be fixed asap. Pull Request Welcomed
 https://github.com/callmezatiel/protocol/issues
