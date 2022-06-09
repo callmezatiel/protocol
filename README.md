@@ -14,7 +14,7 @@ Dependencies
 And some commands in automatic way to do its job i hope you like my tool.
 
 ## Preview
-
+[![Ubuntu-64-bit-2022-06-09-08-28-08.png](https://i.postimg.cc/QdcFbgz0/Ubuntu-64-bit-2022-06-09-08-28-08.png)](https://postimg.cc/K1vccTxM)
 ![protocol.png](https://i.postimg.cc/Gt2m38Mp/protocol.png)
 
 ### Features
