@@ -4,7 +4,7 @@
   <br>
   <a href="https://github.com/callmezatiel"><img src="https://i.postimg.cc/qB5YcSWX/Protocol-Icon.png" width=160 height=150 alt="Protocol"></a>
   <br>
-  BlackMamba
+  Protocol
   <br>
 </h1>
 
