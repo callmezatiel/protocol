@@ -8,7 +8,7 @@
   <br>
 </h1>
 
-<h4 align="center">Command and Control</h4>
+<h4 align="center">Personal Spoofing</h4>
 
 Dependencies
 
