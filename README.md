@@ -61,7 +61,7 @@ And some commands in automatic way to do its job i hope you like my tool.
     sudo ./protocol.sh 
 ```
 
-### NOTE: Run with a root privilege
+# NOTE: Run with a root privilege
 
 
 ###  💙 Thanks and credits
