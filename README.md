@@ -35,7 +35,6 @@ Dependencies
 | git |  The fast distributed version control system (Non-optional) |
 | nmap | Network Mapper |
 | figlet | Banner ASCII |
-| lolcat | Colors |
 | net-tools | Utility Programs |
 | sudo/root | root Access |
 
