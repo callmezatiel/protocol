@@ -1,92 +1,98 @@
 #!/bin/bash
-# Net Recon Tool | Coded by Zatiel 
+# Protocol
+# Author: Zatiel 
 # Requirements: arp-scan, nmap, figlet, lolcat, net-tools, sudo/root
 
 # Colors
-RED="\033[0;31m"
-GREEN="\033[0;32m"
-YELLOW="\033[1;33m"
-NC="\033[0m" # No Color
+RED="\033[0;31m"; GREEN="\033[0;32m"; YELLOW="\033[1;33m"; NC="\033[0m"
 
-# Root privilege check
-if [[ $EUID -ne 0 ]]; then
-   echo -e "${RED}[!] This script must be run as root.${NC}"
-   exit 1
-fi
+# Root check
+[[ $EUID -ne 0 ]] && { echo -e "${RED}[!] Run as root.${NC}"; exit 1; }
 
 # Banner
-clear
-figlet -c "Network Recon" | lolcat
-echo -e "${GREEN}Author: Zatiel | Toolkit for ethical hacking labs${NC}"
-echo ""
+clear; figlet -c "Net Recon Pro" | lolcat
+echo -e "${GREEN}Author: Zatiel | Red Team Toolkit${NC}\n"
 
-# Basic host info
+# Get system info
+local_ip=$(hostname -I | awk '{print $1}')
+domain=$(hostname -d 2>/dev/null || echo 'None')
+interface=$(ip route | grep default | awk '{print $5}')
+gateway=$(ip route | grep default | awk '{print $3}')
+
 echo -e "${YELLOW}[+] System Info:${NC}"
-echo -e "Local IP: $(hostname -I | awk '{print $1}')"
-echo -e "Domain: $(hostname -d 2>/dev/null || echo 'None')"
-echo -e "Active Interface: $(ip route | grep default | awk '{print $5}')"
-echo ""
+echo -e "Interface: $interface\nLocal IP: $local_ip\nGateway: $gateway\nDomain: $domain\n"
 
-# ARP-Scan network discovery
-read -p "Do you want to run ARP scan on local network? (y/n): " arp_choice
-if [[ "$arp_choice" == "y" || "$arp_choice" == "Y" ]]; then
-    echo -e "${GREEN}[*] Running arp-scan...${NC}"
-    interface=$(ip route | grep default | awk '{print $5}')
-    arp-scan --interface=$interface --localnet
-    echo ""
+# Create output directory
+timestamp=$(date +"%Y%m%d_%H%M%S")
+mkdir -p "recon_$timestamp"
+cd "recon_$timestamp" || exit
 
-    # Advanced arp-scan options
-    echo -e "${YELLOW}[+] Running advanced arp-scan features...${NC}"
+# ARP-SCAN
+read -p "Run ARP scan on local network? (y/n): " arp_choice
+if [[ "$arp_choice" =~ ^[Yy]$ ]]; then
+    echo -e "${GREEN}[*] Running ARP Scan on $interface...${NC}"
+    arp-scan --interface=$interface --localnet > arp_scan.txt
+    cat arp_scan.txt
 
-    # 1. Scan with custom MAC vendor filtering (example: Cisco)
-    echo -e "${GREEN}[Advanced] Devices by Cisco (if present):${NC}"
-    arp-scan --interface=$interface --localnet | grep -i 'Cisco' || echo "No Cisco devices found."
-    echo ""
+    # Filter by vendor
+    echo -e "\n${YELLOW}[+] Cisco Devices:${NC}"
+    grep -i 'Cisco' arp_scan.txt || echo "None found."
 
-    # 2. Identify duplicate IPs (potential spoofing)
-    echo -e "${GREEN}[Advanced] Checking for duplicate IPs on LAN...${NC}"
-    arp-scan --interface=$interface --localnet | awk '{print $1}' | sort | uniq -d
-    echo ""
+    # Detect duplicate IPs
+    echo -e "\n${YELLOW}[+] Duplicate IPs (Potential ARP spoofing):${NC}"
+    awk '{print $1}' arp_scan.txt | sort | uniq -d
 
-    # 3. Output scan to file with timestamp
-    timestamp=$(date +"%Y%m%d_%H%M%S")
-    outfile="arp_scan_$timestamp.txt"
-    echo -e "${GREEN}[Advanced] Saving ARP scan to $outfile...${NC}"
-    arp-scan --interface=$interface --localnet > "$outfile"
-    echo ""
+    echo -e "${GREEN}[✓] ARP scan results saved in arp_scan.txt${NC}\n"
 fi
 
-# Advanced Nmap scan
-read -p "Do you want to run an advanced scan with Nmap? (y/n): " nmap_choice
-if [[ "$nmap_choice" == "y" || "$nmap_choice" == "Y" ]]; then
-    read -p "Enter IP or range to scan (e.g., 192.168.1.0/24): " target
+# NMAP SCAN OPTIONS
+read -p "Run advanced Nmap scan? (y/n): " nmap_choice
+if [[ "$nmap_choice" =~ ^[Yy]$ ]]; then
+    read -p "Target IP or CIDR range (e.g., 192.168.1.0/24): " target
 
-    echo -e "${GREEN}[*] Scanning for live hosts...${NC}"
-    nmap -sn $target -oG hosts.txt
-    echo -e "${YELLOW}[*] Detected hosts:${NC}"
-    grep Up hosts.txt | cut -d ' ' -f2
-    echo ""
+    echo -e "${GREEN}[*] Discovering live hosts on $target...${NC}"
+    nmap -sn "$target" -oG hosts.gnmap > /dev/null
+    grep Up hosts.gnmap | awk '{print $2}' > live_hosts.txt
+    echo -e "${YELLOW}[+] Live Hosts:${NC}"; cat live_hosts.txt
 
-    read -p "Scan open ports on these hosts? (y/n): " port_choice
-    if [[ "$port_choice" == "y" || "$port_choice" == "Y" ]]; then
-        echo -e "${GREEN}[*] Scanning top 1000 ports and services...${NC}"
-        for ip in $(grep Up hosts.txt | cut -d ' ' -f2); do
+    read -p "Scan open ports and services on live hosts? (y/n): " port_choice
+    if [[ "$port_choice" =~ ^[Yy]$ ]]; then
+        echo -e "${GREEN}[*] Scanning top 1000 ports (SYN, service/version detection, OS)...${NC}"
+        while IFS= read -r ip; do
             echo -e "${YELLOW}--- Scanning $ip ---${NC}"
-            nmap -sS -sV -O -T4 --top-ports 1000 $ip -oN "scan_$ip.txt"
+            nmap -sS -sV -O --top-ports 1000 -T4 "$ip" -oN "nmap_$ip.txt"
+        done < live_hosts.txt
+    fi
+
+    read -p "Custom port scan? (e.g., 21,22,80,443): " custom_ports
+    if [[ ! -z "$custom_ports" ]]; then
+        for ip in $(cat live_hosts.txt); do
+            echo -e "${GREEN}[*] Scanning custom ports on $ip...${NC}"
+            nmap -p "$custom_ports" -sV "$ip" -oN "custom_ports_$ip.txt"
         done
-        echo -e "${GREEN}[+] Scan complete. Results saved in scan_*.txt${NC}"
     fi
 fi
 
-# Nmap NSE scripts
-read -p "Do you want to run common NSE scripts (vuln, smb, http)? (y/n): " nse_choice
-if [[ "$nse_choice" == "y" || "$nse_choice" == "Y" ]]; then
-    read -p "Enter target IP for NSE scripts: " nse_target
-    echo -e "${GREEN}[*] Running NSE scripts on $nse_target...${NC}"
-    nmap -sV --script=vuln,smb-os-discovery,http-title $nse_target -oN "nse_$nse_target.txt"
-    echo -e "${GREEN}[+] Results saved in nse_$nse_target.txt${NC}"
+# NSE SCRIPT SCAN
+read -p "Run NSE scans (vuln, smb, http)? (y/n): " nse_choice
+if [[ "$nse_choice" =~ ^[Yy]$ ]]; then
+    read -p "Target IP for NSE scripts: " nse_target
+    echo -e "${GREEN}[*] Running common NSE scripts on $nse_target...${NC}"
+    nmap -sV -p 80,443,139,445,22,21 \
+        --script=vuln,smb-os-discovery,http-title,ftp-anon \
+        "$nse_target" -oN "nse_$nse_target.txt"
+    echo -e "${GREEN}[✓] NSE results saved in nse_$nse_target.txt${NC}"
 fi
 
-# Done
-echo -e "${GREEN}[✓] Execution complete. Use this data responsibly.${NC}"
+# BONUS: Save summary
+echo -e "\n${YELLOW}[+] Summary saved to recon_summary.txt${NC}"
+{
+    echo "Scan Timestamp: $(date)"
+    echo "Local IP: $local_ip"
+    echo "Gateway: $gateway"
+    echo "Interface: $interface"
+    echo "Domain: $domain"
+    echo "Targets Scanned: $(cat live_hosts.txt 2>/dev/null | wc -l)"
+} > recon_summary.txt
 
+echo -e "${GREEN}[✓] Recon complete. Output saved in recon_$timestamp/${NC}"
