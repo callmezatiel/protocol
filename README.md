@@ -33,8 +33,36 @@ Dependencies
 | ------ | ------ |
 | arp-scan |  Networking Scanner / Advanced IP Scanner (Non-optional) |
 | git |  The fast distributed version control system (Non-optional) |
+| nmap | Network Mapper |
+| figlet | Banner ASCII |
+| lolcat | Colors |
+| net-tools | Utility Programs |
+| sudo/root | root Access |
 
 And some commands in automatic way to do its job i hope you like my tool.
+
+IMPROVED SCRIPT GOAL
+Professional header and authorship
+
+Root privilege check
+
+ARP network discovery with arp-scan
+
+Advanced scanning with nmap
+
+OS and service detection
+
+Port scanning
+
+NSE scripting
+
+Result export
+
+Interactive menu
+
+Extra: Advanced arp-scan usage
+
+
 
 ## Preview
 [![personal-spoofing.png](https://i.postimg.cc/ZnFTNjnd/personal-spoofing.png)](https://postimg.cc/sGxddYpj)
@@ -42,8 +70,19 @@ And some commands in automatic way to do its job i hope you like my tool.
 
 ### Features
 
-* "ARP (Address Resolution Protocol)"
-* "IP (Internet Protocol)"
+| Function                | Tool            | Purpose               |
+| ----------------------- | --------------- | --------------------- |
+| Root privilege check    | Bash            | Prevent misuse        |
+| ARP network discovery   | `arp-scan`      | Local LAN detection   |
+| Host live detection     | `nmap -sn`      | Ping sweep            |
+| Port and service scan   | `nmap -sS -sV`  | Fingerprinting        |
+| OS detection            | `nmap -O`       | OS-level intel        |
+| NSE scripting           | `nmap --script` | Vulnerability testing |
+| Export to file          | `-oN`, `-oG`    | Store results         |
+| Filter by MAC Vendor    | `grep 'Cisco'`  | Vendor-specific scan  |
+| Detect duplicate IPs    | `uniq -d`       | Spoofing detection    |
+| Timestamped output file | Bash `date`     | Logs & audit          |
+
 
 * and more, comming soon...
 
@@ -63,6 +102,14 @@ And some commands in automatic way to do its job i hope you like my tool.
 
 # NOTE: Run with a root privilege
 
+PROFESSIONAL RECOMMENDATIONS
+Always run this in an authorized environment (lab or pentesting engagement).
+
+You can add Masscan for large-scale scanning with speed.
+
+Consider converting output to HTML reports using xsltproc or nmap-bootstrap.xsl for better visibility.
+
+Add CLI flags (getopts) for non-interactive automation.
 
 ###  💙 Thanks and credits
 N.E.S.T.S. Project 
