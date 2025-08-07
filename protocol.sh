@@ -18,7 +18,7 @@ fi
 # ====== Banner ======
 clear
 if command -v figlet >/dev/null 2>&1; then
-    figlet "Net Recon"
+    figlet "Protocol"
 else
     echo -e "${YELLOW}*** Net Recon Toolkit ***${NC}"
 fi
